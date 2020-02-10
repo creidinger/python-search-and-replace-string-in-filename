@@ -37,8 +37,8 @@ def check_exit(str):
             return False
 
 
-def search_txt_files():
-    """Search text files for user input"""
+def search_str_in_filenames():
+    """Search filenames for user input"""
 
     print("Enter \'exit...\' to quit")
 
@@ -47,6 +47,7 @@ def search_txt_files():
     if not check_exit(search_str):
         input_reg = re.compile(search_str, re.IGNORECASE)
 
+    # get the swap text
     swap_str = get_swap_str()
     check_exit(swap_str)
 
@@ -54,7 +55,7 @@ def search_txt_files():
     path = get_path()
     if not check_exit(path) and os.path.exists(path):
 
-        print(f'search_txt_files: scanning... {os.path.join(path)}')
+        print(f'search_str_in_filenames: scanning... {os.path.join(path)}')
 
         # path exists to iterate over files
         for i in os.listdir(path):
@@ -62,28 +63,28 @@ def search_txt_files():
             try:
                 m = input_reg.search(i)
             except Exception as e:
-                print("search_txt_files: failed...")
-                print(f"search_txt_files: {e}\n")
+                print("search_str_in_filenames: failed...")
+                print(f"search_str_in_filenames: {e}\n")
             else:
                 if m:
-                    print(f"search_txt_files: match found!")
-                    print(f"search_txt_files: {i}")
+                    print(f"search_str_in_filenames: match found!")
+                    print(f"search_str_in_filenames: {i}")
 
                     try:
                         base = os.path.splitext(i)[0]
                         print(
-                            f"search_txt_files: Renaming file to: {base}{swap_str}")
+                            f"search_str_in_filenames: Renaming file to: {base}{swap_str}")
                         os.rename(os.path.join(path, i),
                                   os.path.join(path, base + swap_str))
                     except Exception as e:
-                        print("search_txt_files: Rename failed...")
-                        print(f"search_txt_files: {e}\n")
+                        print("search_str_in_filenames: Rename failed...")
+                        print(f"search_str_in_filenames: {e}\n")
 
     else:
-        print('search_txt_files: The file path does not exist.')
-        print(f'search_txt_files: {path}\n')
+        print('search_str_in_filenames: The file path does not exist.')
+        print(f'search_str_in_filenames: {path}\n')
 
 
 if __name__ == '__main__':
     while True:
-        search_txt_files()
+        search_str_in_filenames()
